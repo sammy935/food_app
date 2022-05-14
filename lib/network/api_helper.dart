@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:get/get.dart';
+import 'package:samip_grubrr/model/common_response.dart';
 import 'package:samip_grubrr/utils/base_extension.dart';
 import 'package:samip_grubrr/utils/base_strings.dart';
 
@@ -21,7 +22,6 @@ class ApiBaseHelper extends GetConnect {
       }
     } on SocketException catch (_) {
       throw 'No internet';
-      return false;
     }
   }
 
@@ -88,9 +88,18 @@ class ApiBaseHelper extends GetConnect {
       case 200:
         return responseJson;
       case 400:
-        throw '$statusCode is status code';
+        String? errorResponse = responseJson;
+
+        throw '$errorResponse';
+
+      case 401:
+        String? errorResponse = responseJson;
+
+        throw '$errorResponse';
       case 403:
-        throw '$statusCode is status code';
+        String? errorResponse = responseJson;
+
+        throw '$errorResponse';
         // Get.offAllNamed(Routes.login);
         break;
       default:

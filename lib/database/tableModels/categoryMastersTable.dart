@@ -1,8 +1,8 @@
 class CategoryMastersTable {
   static const String tableName = "CategoryMasters";
 
-  static const String id = "id";
-  static const String name = "Name";
+  static const String id = "cId";
+  static const String name = "categoryName";
   static const String description = "Description";
 
   static const String createTable =

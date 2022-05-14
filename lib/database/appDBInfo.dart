@@ -1,10 +1,11 @@
 import 'dart:developer';
 
-import 'package:samip_grubrr/tableModels/categoryImagesTable.dart';
-import 'package:samip_grubrr/tableModels/categoryMastersTable.dart';
-import 'package:samip_grubrr/tableModels/foodItemTable.dart';
-import 'package:samip_grubrr/tableModels/food_item_images_table.dart';
-import 'package:samip_grubrr/tableModels/screenSaversTable.dart';
+import 'package:samip_grubrr/database/tableModels/categoryImagesTable.dart';
+import 'package:samip_grubrr/database/tableModels/categoryMastersTable.dart';
+import 'package:samip_grubrr/database/tableModels/category_item_mappings_table.dart';
+import 'package:samip_grubrr/database/tableModels/foodItemTable.dart';
+import 'package:samip_grubrr/database/tableModels/food_item_images_table.dart';
+import 'package:samip_grubrr/database/tableModels/screenSaversTable.dart';
 import 'package:sqflite/sqflite.dart';
 
 class AppDatabaseInfo {
@@ -18,6 +19,7 @@ class AppDatabaseInfo {
     dbTableNameList.add(FoodItemTable.tableName);
     dbTableNameList.add(CategoryImagesTable.tableName);
     dbTableNameList.add(FoodItemImagesTable.tableName);
+    dbTableNameList.add(CategoryItemMappingTable.tableName);
     return dbTableNameList;
   }
 
@@ -38,6 +40,7 @@ class AppDatabaseInfo {
     dbQueryList.add(FoodItemTable.createTable);
     dbQueryList.add(CategoryImagesTable.createTable);
     dbQueryList.add(FoodItemImagesTable.createTable);
+    dbQueryList.add(CategoryItemMappingTable.createTable);
     log('$dbQueryList');
     return dbQueryList;
   }

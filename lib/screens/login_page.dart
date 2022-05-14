@@ -57,12 +57,23 @@ class _LoginPageState extends State<LoginPage> {
           },
           builder: (context, state) {
             if (state is AuthInProgress) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: BaseColors.pink,
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const CircularProgressIndicator(
+                      color: BaseColors.pink,
+                    ),
+                    20.0.toVSB,
+                    const Text('Authenticating.....'),
+                  ],
                 ),
               );
-            } else {
+            } else if (state is AuthCompleted) {
+              return const SizedBox.shrink();
+            }
+            {
               return SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -98,21 +109,16 @@ class _LoginPageState extends State<LoginPage> {
                           focus: pFocus,
                           fieldValidator: (s) => validatePassword(password: s),
                         ),
-                        20.h.toVSB,
-                        Text(
-                          BaseStrings.forgotPassword,
-                          style: pink14,
-                          textAlign: TextAlign.right,
-                        ),
                         90.h.toVSB,
                         CustomElevatedButton(
                           onPressed: () => loginPress(context),
                           title: BaseStrings.login,
                           padding: EdgeInsets.symmetric(vertical: 15.h),
-                          textStyle: Theme.of(context)
-                              .textTheme
-                              .button
-                              ?.copyWith(fontWeight: FontWeight.w400),
+                          textStyle:
+                              Theme.of(context).textTheme.button?.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    color: BaseColors.white,
+                                  ),
                         ),
                       ],
                     ),

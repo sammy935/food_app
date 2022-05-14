@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:samip_grubrr/database/dbRepo.dart';
 import 'package:samip_grubrr/model/common_response.dart';
-import 'package:samip_grubrr/model/screenSaverApiModel.dart';
-import 'package:samip_grubrr/tableModels/screenSaversTable.dart';
+import 'package:samip_grubrr/model/screenSaver_api_model.dart';
+import 'package:samip_grubrr/database/tableModels/screenSaversTable.dart';
 import 'package:samip_grubrr/utils/base_api_const.dart';
 
 class ScreeSaverOps {

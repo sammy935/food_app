@@ -19,7 +19,7 @@ class AppDB {
   Future openDB() async {
     Directory userDirectory = await getApplicationDocumentsDirectory();
     String path = join(userDirectory.path, AppDatabaseInfo.databaseName);
-    print('path =>>${path.toString()}');
+    log('path =>>${path.toString()}');
 
     await openDatabase(path, version: AppDatabaseInfo.databaseVersion)
         .then((db) {

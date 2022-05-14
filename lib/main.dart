@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:samip_grubrr/blocs/auth/auth_bloc.dart';
 import 'package:samip_grubrr/database/dbRepo.dart';
 import 'package:samip_grubrr/network/apiRepo.dart';
-import 'package:samip_grubrr/screens/login_page.dart';
+import 'package:samip_grubrr/utils/preference_manager.dart';
 import 'package:samip_grubrr/utils/routes.dart';
 
 void main() {
@@ -21,6 +19,7 @@ class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
 
   final ApiRepo apiRepo = ApiRepo();
+  final PreferenceManager preferenceManager = PreferenceManager.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +36,9 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            initialRoute: Routes.login,
+            initialRoute: preferenceManager.readUser ?? false
+                ? Routes.home
+                : Routes.login,
             onGenerateRoute: Routes.generateRoute,
           ),
         ),

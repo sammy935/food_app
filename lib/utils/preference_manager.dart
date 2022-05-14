@@ -1,26 +1,24 @@
-// import 'package:get_storage/get_storage.dart';
-//
-// import '../model/user_model.dart';
-//
-// class PreferenceManager {
-//   final storage = GetStorage(); // instance of getStorage class
-//
-//   final String _pUser = 'user';
-//
-//   void addUser(User user) {
-//     storage.write(_pUser, user.toJson());
-//   }
-//
-//   User? get readUser {
-//     final res = storage.read(_pUser);
-//     if (res != null) {
-//       return User.fromJson(res);
-//     } else {
-//       return null;
-//     }
-//   }
-//
-//   void get removeUser {
-//     storage.remove(_pUser);
-//   }
-// }
+import 'package:get_storage/get_storage.dart';
+
+class PreferenceManager {
+  final storage = GetStorage(); // instance of getStorage class
+
+  PreferenceManager._privateConstructor();
+
+  static final PreferenceManager instance =
+      PreferenceManager._privateConstructor();
+
+  final String _pUser = 'isLogin';
+
+  void addUser(bool val) {
+    storage.write(_pUser, val);
+  }
+
+  bool? get readUser {
+    return storage.read(_pUser);
+  }
+
+  void get removeUser {
+    storage.remove(_pUser);
+  }
+}
