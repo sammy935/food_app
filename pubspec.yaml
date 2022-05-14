@@ -39,6 +39,10 @@ dependencies:
   equatable:
   sqflite:
   path_provider:
+  flutter_screenutil:
+  get_storage: ^2.0.3
+  get:
+
 
 dev_dependencies:
   flutter_test:

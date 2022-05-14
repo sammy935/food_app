@@ -8,6 +8,8 @@ class FoodItemTable {
 
   static const String createTable =
       "CREATE TABLE $tableName ($id INTEGER PRIMARY KEY AUTOINCREMENT, $name TEXT, $description	TEXT, $price	INTEGER)";
+  // static const String createTable =
+  //     "CREATE TABLE IF NOT EXISTS $tableName (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, value INTEGER, num REAL)";
 }
 // (Fields to store in table: ItemID,Name,FullDescription,Price)
 
