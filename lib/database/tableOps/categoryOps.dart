@@ -34,15 +34,6 @@ class CategoryOps {
 
   Future<CommonResponse> getAll() async {
     try {
-//       var res = await AppDB.instance.getDatabase().rawQuery('''
-//           SELECT
-//     ${CategoryMastersTable.id},${CategoryMastersTable.name},${CategoryImagesTable.imageUrl}
-// FROM
-//     $tableName
-// INNER JOIN $imageTableName
-//     ON $tableName.${CategoryMastersTable.id} = $imageTableName.${CategoryImagesTable.id};
-//           ''');
-
       var res = await AppDB.instance
           .getDatabase()
           .rawQuery('SELECT * FROM ${CategoryMastersTable.tableName}');
