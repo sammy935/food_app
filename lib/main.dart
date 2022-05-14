@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:samip_grubrr/database/dbRepo.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  AppDB.instance.openDB();
+
   runApp(const MyApp());
 }
 
