@@ -29,7 +29,6 @@ class AppDatabaseInfo {
       String query = "DROP TABLE IF EXISTS ${getTableNameList()[i]}";
       dbDropList.add(query);
     }
-    log('$dbDropList is drop');
     return dbDropList;
   }
 
@@ -41,21 +40,15 @@ class AppDatabaseInfo {
     dbQueryList.add(CategoryImagesTable.createTable);
     dbQueryList.add(FoodItemImagesTable.createTable);
     dbQueryList.add(CategoryItemMappingTable.createTable);
-    log('$dbQueryList');
     return dbQueryList;
   }
 
-  bool initDb(Database theDb) {
+  Future<bool> initDb(Database theDb) async {
     List<String> dbDropList = _generateDropQueryList();
     List<String> dbSchemaQueryList = _generateCreationQueryList();
 
-    for (var i = 0; i < dbDropList.length; i++) {
-      log('${dbDropList[i]} to be dropped');
-      theDb.execute(dbDropList[i]);
-    }
-    log('table deleted');
-
     for (var i = 0; i < dbSchemaQueryList.length; i++) {
+      log('${dbSchemaQueryList[i]} to be created');
       theDb.execute(dbSchemaQueryList[i]);
     }
     log('new tables created');

@@ -12,18 +12,20 @@ class CategoryOps {
 
   Future<CommonResponse> initData() async {
     try {
-      AppDB.instance.getDatabase().execute(
-          "INSERT INTO CategoryMasters VALUES(100,'Burger','American in origin');");
-      AppDB.instance.getDatabase().execute(
-          "INSERT INTO CategoryMasters VALUES(101,'TEST CAT','SAMPLE desc');");
-      AppDB.instance.getDatabase().execute(
-          "INSERT INTO CategoryMasters VALUES(102,'PIZZAS','Italian in origin');");
-      AppDB.instance.getDatabase().execute(
-          " INSERT INTO CategoryImages(ImageUrl,CategoryID) VALUES('https://picsum.photos/id/1024/500',101);");
-      AppDB.instance.getDatabase().execute(
-          "INSERT INTO CategoryImages(ImageUrl,CategoryID) VALUES('https://picsum.photos/id/1000/500',101);");
-      AppDB.instance.getDatabase().execute(
-          "INSERT INTO CategoryImages(ImageUrl,CategoryID) VALUES('https://picsum.photos/id/500/500',102);");
+      AppDB.instance.getDatabase().transaction((txn) async {
+        await txn.execute(
+            "INSERT INTO CategoryMasters VALUES(100,'Burger','American in origin');");
+        await txn.execute(
+            "INSERT INTO CategoryMasters VALUES(101,'TEST CAT','SAMPLE desc');");
+        await txn.execute(
+            "INSERT INTO CategoryMasters VALUES(102,'PIZZAS','Italian in origin');");
+        await txn.execute(
+            " INSERT INTO CategoryImages(categoryImageUrl,CategoryID) VALUES('https://picsum.photos/id/1024/500',101);");
+        await txn.execute(
+            "INSERT INTO CategoryImages(categoryImageUrl,CategoryID) VALUES('https://picsum.photos/id/1000/500',101);");
+        await txn.execute(
+            "INSERT INTO CategoryImages(categoryImageUrl,CategoryID) VALUES('https://picsum.photos/id/500/500',102);");
+      });
 
       return CommonResponse(message: 'Success', data: {'val': true});
     } catch (e) {

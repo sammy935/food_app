@@ -4,7 +4,7 @@ import 'package:samip_grubrr/database/tableModels/foodItemTable.dart';
 import 'package:samip_grubrr/database/tableModels/food_item_images_table.dart';
 
 class CategoryItemMappingTable {
-  static const String tableName = "CategoryItemMappingTable";
+  static const String tableName = "categoryItemMappingTable";
 
   static const String categoryId = CategoryMastersTable.id;
   static const String categoryImageUrl = CategoryImagesTable.imageUrl;
@@ -17,5 +17,5 @@ class CategoryItemMappingTable {
   static const String itemImageUrl = FoodItemImagesTable.imageUrl;
 
   static const String createTable =
-      '''CREATE TABLE $tableName ($categoryId INTEGER NOT NULL,$itemId INTEGER NOT NULL, $categoryImageUrl TEXT, $itemImageUrl TEXT, $categoryName TEXT, $categoryDesc TEXT,$itemName TEXT,$itemDesc TEXT, $itemPrice INTEGER,PRIMARY KEY ($itemId, $categoryId),FOREIGN KEY ($categoryId) REFERENCES ${CategoryMastersTable.tableName} (${CategoryMastersTable.id}), FOREIGN KEY ($itemId) REFERENCES ${FoodItemTable.tableName} (${FoodItemTable.id}))''';
+      '''CREATE TABLE IF NOT EXISTS $tableName ($categoryId INTEGER NOT NULL,$itemId INTEGER NOT NULL, $categoryImageUrl TEXT, $itemImageUrl TEXT, $categoryName TEXT, $categoryDesc TEXT,$itemName TEXT,$itemDesc TEXT, $itemPrice INTEGER,PRIMARY KEY ($itemId, $categoryId),FOREIGN KEY ($categoryId) REFERENCES ${CategoryMastersTable.tableName} (${CategoryMastersTable.id}), FOREIGN KEY ($itemId) REFERENCES ${FoodItemTable.tableName} (${FoodItemTable.id}))''';
 }

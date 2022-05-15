@@ -21,6 +21,8 @@ class AppDB {
     String path = join(userDirectory.path, AppDatabaseInfo.databaseName);
     log('path =>>${path.toString()}');
 
+    await deleteDatabase(path);
+
     await openDatabase(path, version: AppDatabaseInfo.databaseVersion)
         .then((db) {
       _db = db;
