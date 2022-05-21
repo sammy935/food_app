@@ -3,6 +3,7 @@ class BaseStrings {
   static const String errorOccurs = 'Error Occured';
 
   static const String login = 'LOGIN';
+  static const String appName = 'appName';
 
   /// snackBar message
   static const String loginSuccess = 'Login success';

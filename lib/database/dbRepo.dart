@@ -22,14 +22,14 @@ class AppDB {
     String path = join(userDirectory.path, AppDatabaseInfo.databaseName);
     'path =>>${path.toString()}'.toLog;
 
-    await deleteDatabase(path);
+    // await deleteDatabase(path);
 
     await openDatabase(path, version: AppDatabaseInfo.databaseVersion)
-        .then((db) {
+        .then((db) async {
       _db = db;
       'db open.'.toLog;
 
-      AppDatabaseInfo().initDb(_db);
+      await AppDatabaseInfo().initDb(_db);
     }).catchError((error) {
       'Error while tring to open db: $error'.toErrorLog;
     });

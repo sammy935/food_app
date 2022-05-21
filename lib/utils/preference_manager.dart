@@ -1,24 +1,29 @@
-import 'package:get_storage/get_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceManager {
-  final storage = GetStorage(); // instance of getStorage class
+  late final SharedPreferences _storage;
 
-  PreferenceManager._privateConstructor();
-
-  static final PreferenceManager instance =
-      PreferenceManager._privateConstructor();
+  PreferenceManager();
 
   final String _pUser = 'isLogin';
+  final String screenSaverData = 'screenSaverData';
 
-  void changeLoginStatus(bool val) {
-    storage.write(_pUser, val);
+  Future<void> changeLoginStatus(bool val) async {
+    _storage = await SharedPreferences.getInstance();
+    await _storage.setBool(_pUser, val);
   }
 
-  bool? get readUser {
-    return storage.read(_pUser);
+  Future<void> addImageScreenSaver(List<String> val) async {
+    _storage = await SharedPreferences.getInstance();
+    await _storage.setStringList(screenSaverData, val);
+  }
+
+  Future<bool?> get readUser async {
+    _storage = await SharedPreferences.getInstance();
+    return _storage.getBool(_pUser);
   }
 
   void get removeUser {
-    storage.remove(_pUser);
+    _storage.remove(_pUser);
   }
 }

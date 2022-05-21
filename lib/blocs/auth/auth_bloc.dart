@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:samip_grubrr/database/tableOps/categoryOps.dart';
+import 'package:samip_grubrr/database/tableOps/category_item_mapping_ops.dart';
 import 'package:samip_grubrr/database/tableOps/screenSaverOps.dart';
 import 'package:samip_grubrr/model/common_response.dart';
 import 'package:samip_grubrr/model/screenSaver_api_model.dart';
@@ -12,7 +14,7 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   late final ApiRepo apiRepo;
-  final PreferenceManager preferenceManager = PreferenceManager.instance;
+  final PreferenceManager preferenceManager = PreferenceManager();
   AuthBloc({required this.apiRepo}) : super(AuthInitial()) {
     on<AuthEvent>((event, emit) async {
       if (event is LoginEvent) {
@@ -26,13 +28,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           );
           final response = ScreenSaverMastersResponse.fromJson(res);
 
+          /// to insert in db
           final CommonResponse dbRes = await screeSaverOps.insert(response);
+          // await PreferenceManager().addImageScreenSaver(List.from(response.screenSaverMasters!.map<String>((e) => e.imagePath!)));
 
           // final res2 = await CategoryOps().getAll();
           // final res4 = await CategoryItemMapOps().getAllFoodItems(100);
           // final res5 = await CategoryItemMapOps().getAllFoodItems(102);
 
           if (dbRes.data != null) {
+            /// init data
+            await CategoryOps().initData();
+            await CategoryItemMapOps().initData();
             // final CommonResponse getAllData = await screeSaverOps.getAll();
             //
             // List<ScreenSaverMaster> list = List<ScreenSaverMaster>.from(
@@ -41,7 +48,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             // for (var element in list) {
             //   '${element.imagePath} ${element.screenSaverId} is list '.toLog;
             // }
-            preferenceManager.changeLoginStatus(true);
+            await preferenceManager.changeLoginStatus(true);
+            '${preferenceManager.readUser} after login status change'.toLog;
             // '${preferenceManager.readUser} is login'.toLog;
             emit.call(AuthCompleted(response));
           } else {

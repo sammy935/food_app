@@ -5,5 +5,5 @@ class ScreenSaversTable {
   static const String imagePath = "ImagePath";
 
   static const String createTable =
-      "CREATE TABLE $tableName ($id INTEGER PRIMARY KEY AUTOINCREMENT, $imagePath TEXT)";
+      "CREATE TABLE IF NOT EXISTS $tableName ($id INTEGER PRIMARY KEY AUTOINCREMENT, $imagePath TEXT)";
 }

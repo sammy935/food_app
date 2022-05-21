@@ -31,7 +31,7 @@ dependencies:
   flutter_screenutil: ^5.5.2
 
   # get
-  get_storage: ^2.0.3
+  shared_preferences:
   get: ^4.6.3
 
 

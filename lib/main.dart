@@ -12,19 +12,26 @@ import 'package:samip_grubrr/utils/base_colors.dart';
 import 'package:samip_grubrr/utils/preference_manager.dart';
 import 'package:samip_grubrr/utils/routes.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  AppDB.instance.openDB();
 
-  runApp(MyApp());
+  final PreferenceManager preferenceManager = PreferenceManager();
+
+  List list = await Future.wait([
+    AppDB.instance.openDB(),
+    preferenceManager.readUser,
+  ]);
+
+  final bool? value = list[1];
+
+  runApp(MyApp(isLogin: value ?? false));
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key, required this.isLogin}) : super(key: key);
 
   final ApiRepo apiRepo = ApiRepo();
-  final PreferenceManager preferenceManager = PreferenceManager.instance;
-
+  final bool isLogin;
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -44,9 +51,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.blue,
               scaffoldBackgroundColor: BaseColors.white,
             ),
-            initialRoute: preferenceManager.readUser ?? false
-                ? Routes.home
-                : Routes.login,
+            initialRoute: isLogin ? Routes.home : Routes.login,
             onGenerateRoute: Routes.generateRoute,
           ),
         ),

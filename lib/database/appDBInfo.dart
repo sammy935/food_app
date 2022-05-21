@@ -37,9 +37,9 @@ class AppDatabaseInfo {
     List<String> dbQueryList = [];
     dbQueryList.add(ScreenSaversTable.createTable);
     dbQueryList.add(CategoryMastersTable.createTable);
-    dbQueryList.add(FoodItemTable.createTable);
+    // dbQueryList.add(FoodItemTable.createTable);
     dbQueryList.add(CategoryImagesTable.createTable);
-    dbQueryList.add(FoodItemImagesTable.createTable);
+    // dbQueryList.add(FoodItemImagesTable.createTable);
     dbQueryList.add(CategoryItemMappingTable.createTable);
     return dbQueryList;
   }
@@ -53,10 +53,6 @@ class AppDatabaseInfo {
       theDb.execute(dbSchemaQueryList[i]);
     }
     'new tables created'.toLog;
-
-    /// init data
-    await CategoryOps().initData();
-    await CategoryItemMapOps().initData();
 
     'data initialized'.toLog;
 

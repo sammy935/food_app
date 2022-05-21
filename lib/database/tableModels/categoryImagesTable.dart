@@ -8,5 +8,5 @@ class CategoryImagesTable {
   static const String imageUrl = "categoryImageUrl";
 
   static const String createTable =
-      "CREATE TABLE $tableName ($id INTEGER PRIMARY KEY AUTOINCREMENT, $imageUrl TEXT, $categoryId INTEGER NOT NULL, FOREIGN KEY ($categoryId) REFERENCES ${CategoryMastersTable.tableName} (${CategoryMastersTable.id}) ) ";
+      "CREATE TABLE IF NOT EXISTS $tableName ($id INTEGER PRIMARY KEY AUTOINCREMENT, $imageUrl TEXT, $categoryId INTEGER NOT NULL, FOREIGN KEY ($categoryId) REFERENCES ${CategoryMastersTable.tableName} (${CategoryMastersTable.id}) ) ";
 }
