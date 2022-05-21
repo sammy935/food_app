@@ -7,5 +7,5 @@ class FoodItemTable {
   static const String price = 'price';
 
   static const String createTable =
-      "CREATE TABLE $tableName ($id INTEGER PRIMARY KEY AUTOINCREMENT, $name TEXT, $description	TEXT, $price	INTEGER)";
+      "CREATE TABLE $tableName ($id INTEGER PRIMARY KEY AUTOINCREMENT, $name TEXT, $description	TEXT, $price	REAL)";
 }

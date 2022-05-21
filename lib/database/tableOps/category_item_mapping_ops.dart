@@ -3,8 +3,6 @@ import 'dart:developer';
 import 'package:samip_grubrr/database/dbRepo.dart';
 import 'package:samip_grubrr/database/tableModels/category_item_mappings_table.dart';
 import 'package:samip_grubrr/model/common_response.dart';
-import 'package:samip_grubrr/database/tableModels/categoryImagesTable.dart';
-import 'package:samip_grubrr/database/tableModels/categoryMastersTable.dart';
 import 'package:samip_grubrr/utils/base_api_const.dart';
 
 class CategoryItemMapOps {
@@ -46,7 +44,7 @@ FROM
 WHERE ${CategoryItemMappingTable.categoryId} = $cId;
           ''');
 
-      final res2 = await AppDB.instance.getDatabase().rawQuery('''
+      await AppDB.instance.getDatabase().rawQuery('''
           SELECT * FROM ${CategoryItemMappingTable.tableName}
           ''');
 

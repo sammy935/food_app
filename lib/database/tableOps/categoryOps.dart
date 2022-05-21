@@ -12,20 +12,18 @@ class CategoryOps {
 
   Future<CommonResponse> initData() async {
     try {
-      AppDB.instance.getDatabase().transaction((txn) async {
-        await txn.execute(
-            "INSERT INTO CategoryMasters VALUES(100,'Burger','American in origin');");
-        await txn.execute(
-            "INSERT INTO CategoryMasters VALUES(101,'TEST CAT','SAMPLE desc');");
-        await txn.execute(
-            "INSERT INTO CategoryMasters VALUES(102,'PIZZAS','Italian in origin');");
-        await txn.execute(
-            " INSERT INTO CategoryImages(categoryImageUrl,CategoryID) VALUES('https://picsum.photos/id/1024/500',101);");
-        await txn.execute(
-            "INSERT INTO CategoryImages(categoryImageUrl,CategoryID) VALUES('https://picsum.photos/id/1000/500',101);");
-        await txn.execute(
-            "INSERT INTO CategoryImages(categoryImageUrl,CategoryID) VALUES('https://picsum.photos/id/500/500',102);");
-      });
+      await AppDB.instance.getDatabase().execute(
+          "INSERT INTO ${CategoryMastersTable.tableName} VALUES(100,'Burger','American in origin');");
+      await AppDB.instance.getDatabase().execute(
+          "INSERT INTO ${CategoryMastersTable.tableName} VALUES(101,'TEST CAT','SAMPLE desc');");
+      await AppDB.instance.getDatabase().execute(
+          "INSERT INTO ${CategoryMastersTable.tableName} VALUES(102,'PIZZAS','Italian in origin');");
+      await AppDB.instance.getDatabase().execute(
+          " INSERT INTO ${CategoryImagesTable.tableName}(${CategoryImagesTable.imageUrl},${CategoryImagesTable.categoryId}) VALUES('https://picsum.photos/id/1024/500',100);");
+      await AppDB.instance.getDatabase().execute(
+          "INSERT INTO ${CategoryImagesTable.tableName}(${CategoryImagesTable.imageUrl},${CategoryImagesTable.categoryId}) VALUES('https://picsum.photos/id/1000/500',101);");
+      await AppDB.instance.getDatabase().execute(
+          "INSERT INTO ${CategoryImagesTable.tableName}(${CategoryImagesTable.imageUrl},${CategoryImagesTable.categoryId}) VALUES('https://picsum.photos/id/500/500',102);");
 
       return CommonResponse(message: 'Success', data: {'val': true});
     } catch (e) {
@@ -36,9 +34,13 @@ class CategoryOps {
 
   Future<CommonResponse> getAll() async {
     try {
-      var res = await AppDB.instance
-          .getDatabase()
-          .rawQuery('SELECT * FROM ${CategoryMastersTable.tableName}');
+      String query = '''SELECT
+      ${CategoryMastersTable.id},${CategoryMastersTable.name},${CategoryImagesTable.imageUrl}
+      FROM
+      ${CategoryMastersTable.tableName}
+      INNER JOIN ${CategoryImagesTable.tableName}
+      ON ${CategoryMastersTable.id} = ${CategoryImagesTable.categoryId}''';
+      var res = await AppDB.instance.getDatabase().rawQuery(query);
 
       return CommonResponse(
           message: 'Success', data: {BaseApiConstants.val: res});

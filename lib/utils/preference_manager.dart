@@ -10,7 +10,7 @@ class PreferenceManager {
 
   final String _pUser = 'isLogin';
 
-  void addUser(bool val) {
+  void changeLoginStatus(bool val) {
     storage.write(_pUser, val);
   }
 

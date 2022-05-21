@@ -39,21 +39,28 @@ class BaseStyles {
     color: const Color(0xFF898989),
   );
 
-  static TextStyle elementTitleText = TextStyle(
+  static TextStyle errorText =
+      TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold);
+
+  static TextStyle buttonTextStyle = TextStyle(
+    fontSize: 12.sp,
     fontWeight: FontWeight.bold,
-    fontSize: 16.sp,
-    color: BaseColors.black,
   );
 
-  static TextStyle discountText = TextStyle(
+  static TextStyle categoryNameText = TextStyle(
+    color: BaseColors.black,
     fontWeight: FontWeight.normal,
-    fontSize: 14.sp,
-    color: BaseColors.pink,
+    fontSize: 12.sp,
+  );
+  static TextStyle foodNameText = TextStyle(
+    color: BaseColors.amber,
+    fontWeight: FontWeight.normal,
+    fontSize: 12.sp,
   );
 
-  static TextStyle radioListTileText = TextStyle(
-    fontWeight: FontWeight.normal,
-    fontSize: 14.sp,
+  static TextStyle foodPriceText = TextStyle(
     color: BaseColors.black,
+    fontWeight: FontWeight.normal,
+    fontSize: 12.sp,
   );
 }

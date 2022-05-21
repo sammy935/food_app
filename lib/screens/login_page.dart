@@ -1,17 +1,13 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:samip_grubrr/blocs/auth/auth_bloc.dart';
-import 'package:samip_grubrr/network/apiRepo.dart';
-import 'package:samip_grubrr/utils/base_api_const.dart';
 import 'package:samip_grubrr/utils/base_colors.dart';
 import 'package:samip_grubrr/utils/base_extension.dart';
+import 'package:samip_grubrr/utils/base_images.dart';
 import 'package:samip_grubrr/utils/base_strings.dart';
+import 'package:samip_grubrr/widgets/custom_buttons.dart';
 import 'package:samip_grubrr/widgets/custom_textfield.dart';
-import 'package:samip_grubrr/widgets/elevatedButton.dart';
 
 import '../../utils/base_methods.dart';
 import '../../utils/routes.dart';
@@ -43,37 +39,27 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
-            log('$state in login page');
+            // og('$state in login page');
             if (state is AuthCompleted) {
               Navigator.of(context).pushNamedAndRemoveUntil(
-                  Routes.screenSaver, (route) => false, arguments: {
-                BaseApiConstants.url:
-                    state.response.screenSaverMasters!.first.imagePath!
-              });
+                Routes.screenSaver,
+                (route) => false,
+                // arguments: {
+                //   BaseApiConstants.url:
+                //       state.response.screenSaverMasters!.first.imagePath!
+                // },
+              );
               // Get.offAllNamed(Routes.screenSaver, arguments: );
-            } else if (state is AuthFailed) {
-              state.message.errorSnackBar;
             }
           },
           builder: (context, state) {
             if (state is AuthInProgress) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const CircularProgressIndicator(
-                      color: BaseColors.pink,
-                    ),
-                    20.0.toVSB,
-                    const Text('Authenticating.....'),
-                  ],
-                ),
+              return const PlatformIndicator(
+                message: 'Authenticating.....',
               );
             } else if (state is AuthCompleted) {
               return const SizedBox.shrink();
-            }
-            {
+            } else {
               return SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -85,12 +71,12 @@ class _LoginPageState extends State<LoginPage> {
                         40.0.toVSB,
                         Center(
                           child: ClipOval(
-                            child: Image.network(
-                              'https://picsum.photos/400',
+                            child: FadeInImage(
+                              image: const NetworkImage(
+                                  'https://picsum.photos/400'),
                               width: 0.40.sw,
                               height: 0.40.sw,
-                              errorBuilder: (_, __, ___) =>
-                                  const Text('   Image not found   '),
+                              placeholder: const AssetImage(BaseImages.shimmer),
                             ),
                           ),
                         ),
@@ -146,6 +132,38 @@ class _LoginPageState extends State<LoginPage> {
       color: BaseColors.pink,
       fontWeight: FontWeight.w400,
       fontSize: 14.sp,
+    );
+  }
+}
+
+class PlatformIndicator extends StatelessWidget {
+  const PlatformIndicator({
+    Key? key,
+    this.message,
+    this.showMessage = true,
+  })  : assert(showMessage ? message != null : true,
+            'message null when showMessage true'),
+        super(key: key);
+
+  final String? message;
+  final bool showMessage;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const CircularProgressIndicator(
+            color: BaseColors.pink,
+          ),
+          if (showMessage) ...[
+            20.0.toVSB,
+            Text(message!),
+          ]
+        ],
+      ),
     );
   }
 }

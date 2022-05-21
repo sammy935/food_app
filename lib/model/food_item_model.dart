@@ -1,13 +1,14 @@
+import 'package:equatable/equatable.dart';
 import 'package:samip_grubrr/database/tableModels/foodItemTable.dart';
 import 'package:samip_grubrr/database/tableModels/food_item_images_table.dart';
 
-class FoodItem {
-  int id;
-  String imageLink;
-  String name;
-  int price;
+class FoodItem extends Equatable {
+  final int id;
+  final String imageLink;
+  final String name;
+  final double price;
 
-  FoodItem({
+  const FoodItem({
     required this.id,
     required this.imageLink,
     required this.name,
@@ -25,4 +26,7 @@ class FoodItem {
         name: json[FoodItemTable.name],
         price: json[FoodItemTable.price],
       );
+
+  @override
+  List<Object?> get props => [id, imageLink, name, price];
 }

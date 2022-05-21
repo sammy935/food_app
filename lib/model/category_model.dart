@@ -1,12 +1,13 @@
+import 'package:equatable/equatable.dart';
 import 'package:samip_grubrr/database/tableModels/categoryImagesTable.dart';
 import 'package:samip_grubrr/database/tableModels/categoryMastersTable.dart';
 
-class Category {
-  int id;
-  String imageLink;
-  String name;
+class Category extends Equatable {
+  final int id;
+  final String imageLink;
+  final String name;
 
-  Category({
+  const Category({
     required this.id,
     required this.imageLink,
     required this.name,
@@ -22,4 +23,7 @@ class Category {
         imageLink: json[CategoryImagesTable.imageUrl],
         name: json[CategoryMastersTable.name],
       );
+
+  @override
+  List<Object?> get props => [id, name, imageLink];
 }

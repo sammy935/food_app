@@ -1,11 +1,8 @@
-import 'dart:developer';
 import 'dart:io';
+
 import 'package:get/get.dart';
-import 'package:samip_grubrr/model/common_response.dart';
 import 'package:samip_grubrr/utils/base_extension.dart';
 import 'package:samip_grubrr/utils/base_strings.dart';
-
-import '../../utils/preference_manager.dart';
 
 class ApiBaseHelper extends GetConnect {
   final String _baseUrl = "https://staging.grubbrr.com/api/";
@@ -36,15 +33,15 @@ class ApiBaseHelper extends GetConnect {
     }
     var responseJson;
     // try {
-    log('REQ=>$requestBody');
-    log('URL=>${_baseUrl + url}');
+    'REQ=>$requestBody\n\nURL=>${_baseUrl + url}'.toLog;
+
     var serverResponse = await post(
       _baseUrl + url,
       requestBody,
       headers: headers,
     );
     final decodedJSON = serverResponse.body;
-    log('response=>${serverResponse.statusCode} ${serverResponse.body}');
+    'response=>${serverResponse.statusCode} ${serverResponse.body}'.toLog;
     responseJson = _transformResponse(serverResponse.statusCode, decodedJSON);
     // } on SocketException {
     //   BaseStrings.internetNotAvailable.alertSnackBar;}
@@ -63,12 +60,13 @@ class ApiBaseHelper extends GetConnect {
     if (!(await _checkInternet ?? false)) {
       return null;
     }
-    print('URL=>${_baseUrl + endPoint}');
-    var responseJson;
+
+    late final responseJson;
     try {
       var serverResponse = await get(_baseUrl + endPoint, headers: headers);
       final decodedJSON = serverResponse.body;
-      log('response=>${serverResponse.statusCode} ${serverResponse.body}');
+      'URL=>${_baseUrl + endPoint}\n\nresponse=>${serverResponse.statusCode} ${serverResponse.body}'
+          .toLog;
 
       responseJson = _transformResponse(serverResponse.statusCode, decodedJSON);
       return decodedJSON;
@@ -83,7 +81,7 @@ class ApiBaseHelper extends GetConnect {
 
   dynamic _transformResponse(statusCode, responseJson) {
     // ErrorResponse errorResponse = ErrorResponse.fromJson(responseJson);
-    print(responseJson.toString());
+    responseJson.toString().toLog;
     switch (statusCode) {
       case 200:
         return responseJson;
@@ -100,8 +98,7 @@ class ApiBaseHelper extends GetConnect {
         String? errorResponse = responseJson;
 
         throw '$errorResponse';
-        // Get.offAllNamed(Routes.login);
-        break;
+      // Get.offAllNamed(Routes.login);
       default:
         throw BaseStrings.errorOccurs;
     }

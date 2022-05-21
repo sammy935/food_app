@@ -1,14 +1,10 @@
-import 'dart:developer';
-
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:samip_grubrr/database/tableOps/categoryOps.dart';
-import 'package:samip_grubrr/database/tableOps/category_item_mapping_ops.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:samip_grubrr/database/tableOps/screenSaverOps.dart';
 import 'package:samip_grubrr/model/common_response.dart';
 import 'package:samip_grubrr/model/screenSaver_api_model.dart';
 import 'package:samip_grubrr/network/apiRepo.dart';
-import 'package:samip_grubrr/utils/base_api_const.dart';
+import 'package:samip_grubrr/utils/base_extension.dart';
 import 'package:samip_grubrr/utils/preference_manager.dart';
 
 part 'auth_event.dart';
@@ -31,30 +27,30 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           final response = ScreenSaverMastersResponse.fromJson(res);
 
           final CommonResponse dbRes = await screeSaverOps.insert(response);
-          final res1 = await CategoryOps().initData();
-          final res2 = await CategoryOps().getAll();
 
-          final res3 = await CategoryItemMapOps().initData();
-          final res4 = await CategoryItemMapOps().getAllFoodItems(100);
-          final res5 = await CategoryItemMapOps().getAllFoodItems(102);
+          // final res2 = await CategoryOps().getAll();
+          // final res4 = await CategoryItemMapOps().getAllFoodItems(100);
+          // final res5 = await CategoryItemMapOps().getAllFoodItems(102);
 
           if (dbRes.data != null) {
-            final CommonResponse getAllData = await screeSaverOps.getAll();
-
-            List<ScreenSaverMaster> list = List<ScreenSaverMaster>.from(
-                getAllData.data![BaseApiConstants.val]
-                    .map((x) => ScreenSaverMaster.fromJson(x)));
-            for (var element in list) {
-              log('${element.imagePath} ${element.screenSaverId} is list ');
-            }
-            preferenceManager.addUser(true);
-            log('${preferenceManager.readUser} is login');
+            // final CommonResponse getAllData = await screeSaverOps.getAll();
+            //
+            // List<ScreenSaverMaster> list = List<ScreenSaverMaster>.from(
+            //     getAllData.data![BaseApiConstants.val]
+            //         .map((x) => ScreenSaverMaster.fromJson(x)));
+            // for (var element in list) {
+            //   '${element.imagePath} ${element.screenSaverId} is list '.toLog;
+            // }
+            preferenceManager.changeLoginStatus(true);
+            // '${preferenceManager.readUser} is login'.toLog;
             emit.call(AuthCompleted(response));
           } else {
-            emit.call(AuthFailed(dbRes.message));
+            dbRes.message.errorSnackBar;
+            emit.call(AuthFailed());
           }
         } catch (e) {
-          emit.call(AuthFailed(e.toString()));
+          e.toString().errorSnackBar;
+          emit.call(AuthFailed());
         }
       }
     });

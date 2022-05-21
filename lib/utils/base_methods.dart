@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:samip_grubrr/utils/base_extension.dart';
 
 String? validateEmpty({required String? name, required String element}) {
   if (name?.isEmpty ?? true) {
@@ -72,27 +73,6 @@ String? validateName({required String? name}) {
   return null;
 }
 
-String? validateGender({required String? name}) {
-  List genders = ['Female', 'Male', 'All'];
-  if (name?.isEmpty ?? true) {
-    return 'Gender can\'t be empty';
-  } else if (genders.indexWhere(
-          (element) => name!.toLowerCase() == element.toLowerCase()) <=
-      -1) {
-    return 'Please write oen of the following ${genders.join(' ,')}';
-  }
-
-  return null;
-}
-
-String? validateInstagram({required String? name}) {
-  if (name?.isEmpty ?? true) {
-    return 'Instagram name can\'t be empty';
-  }
-
-  return null;
-}
-
 String? validatePassword({required String? password}) {
   if (password == null) {
     return null;
@@ -118,4 +98,25 @@ String? validateConfirmPassword({
   }
 
   return null;
+}
+
+Widget customLoadingBuilder(
+    BuildContext context, Widget child, ImageChunkEvent? loadingProgress,
+    {bool? showMessage = false}) {
+  if (loadingProgress == null) return child;
+
+  Widget progress = CircularProgressIndicator(
+    value: loadingProgress.expectedTotalBytes != null
+        ? loadingProgress.cumulativeBytesLoaded /
+            loadingProgress.expectedTotalBytes!
+        : null,
+  );
+
+  return showMessage!
+      ? Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [progress, 20.0.toVSB, const Text('Loading Image...')],
+        )
+      : progress;
 }
