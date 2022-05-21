@@ -30,6 +30,12 @@ class _ScreenSaversPageState extends State<ScreenSaversPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _screenSaverCubit.close();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BaseColors.white,
