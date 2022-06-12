@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:samip_grubrr/blocs/category_bloc/category_bloc.dart';
 import 'package:samip_grubrr/blocs/item/items_bloc.dart';
 import 'package:samip_grubrr/model/category_model.dart';
-import 'package:samip_grubrr/screens/login_page.dart';
 import 'package:samip_grubrr/utils/base_colors.dart';
 import 'package:samip_grubrr/utils/base_extension.dart';
 import 'package:samip_grubrr/utils/base_methods.dart';
@@ -13,6 +12,8 @@ import 'package:samip_grubrr/utils/base_styles.dart';
 import 'package:samip_grubrr/utils/routes.dart';
 import 'package:samip_grubrr/widgets/custom_buttons.dart';
 import 'package:samip_grubrr/widgets/item_page_view.dart';
+
+import '../widgets/platform_indicator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -61,7 +62,10 @@ class _HomePageState extends State<HomePage> {
                       controller: pageController,
                       scrollDirection: Axis.vertical,
                       itemBuilder: (context, index) {
-                        return FoodItemPageView(index: index + 1);
+                        return FoodItemPageView(
+                          index: index + 1,
+                          itemBloc: itemBloc,
+                        );
                       },
                     ),
                   ),

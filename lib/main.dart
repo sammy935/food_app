@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:samip_grubrr/blocs/auth/auth_bloc.dart';
 import 'package:samip_grubrr/blocs/category_bloc/category_bloc.dart';
 import 'package:samip_grubrr/blocs/item/items_bloc.dart';
+import 'package:samip_grubrr/blocs/order/order_bloc_cubit.dart';
 import 'package:samip_grubrr/blocs/screen_saver/screen_saver_cubit.dart';
 import 'package:samip_grubrr/database/dbRepo.dart';
 import 'package:samip_grubrr/network/apiRepo.dart';
@@ -38,9 +39,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => AuthBloc(apiRepo: apiRepo)),
         BlocProvider(create: (context) => CategoryBloc()),
+        BlocProvider(create: (context) => OrderBlocCubit()),
         BlocProvider(create: (context) => ItemsBloc()),
         BlocProvider(create: (context) => ScreenSaverCubit()),
-        // BlocProvider(create: create)
       ],
       child: ScreenUtilInit(
         builder: (c) => GestureDetector(

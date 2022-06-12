@@ -6,6 +6,7 @@ class BaseColors {
   static const black = Colors.black;
   static const white = Colors.white;
   static const amber = Colors.amber;
+  static const orange = Colors.orange;
   static const transparent = Colors.transparent;
   static const yellow = Colors.yellow;
   static const Color pink = Color(0xFFff4f72);

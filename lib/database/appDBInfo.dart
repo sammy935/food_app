@@ -4,8 +4,7 @@ import 'package:samip_grubrr/database/tableModels/category_item_mappings_table.d
 import 'package:samip_grubrr/database/tableModels/foodItemTable.dart';
 import 'package:samip_grubrr/database/tableModels/food_item_images_table.dart';
 import 'package:samip_grubrr/database/tableModels/screenSaversTable.dart';
-import 'package:samip_grubrr/database/tableOps/categoryOps.dart';
-import 'package:samip_grubrr/database/tableOps/category_item_mapping_ops.dart';
+import 'package:samip_grubrr/model/order_model.dart';
 import 'package:samip_grubrr/utils/base_extension.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -41,6 +40,7 @@ class AppDatabaseInfo {
     dbQueryList.add(CategoryImagesTable.createTable);
     // dbQueryList.add(FoodItemImagesTable.createTable);
     dbQueryList.add(CategoryItemMappingTable.createTable);
+    dbQueryList.add(OrderModel.createTable);
     return dbQueryList;
   }
 
@@ -49,7 +49,7 @@ class AppDatabaseInfo {
     List<String> dbSchemaQueryList = _generateCreationQueryList();
 
     for (var i = 0; i < dbSchemaQueryList.length; i++) {
-      // log('${dbSchemaQueryList[i]} to be created');
+      '${dbSchemaQueryList[i]} to be created'.toLog;
       theDb.execute(dbSchemaQueryList[i]);
     }
     'new tables created'.toLog;

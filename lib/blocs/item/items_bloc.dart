@@ -1,8 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:samip_grubrr/database/tableOps/category_item_mapping_ops.dart';
+import 'package:samip_grubrr/database/tableOps/order_model_ops.dart';
 import 'package:samip_grubrr/model/common_response.dart';
 import 'package:samip_grubrr/model/food_item_model.dart';
+import 'package:samip_grubrr/model/order_model.dart';
 import 'package:samip_grubrr/utils/base_api_const.dart';
 import 'package:samip_grubrr/utils/base_extension.dart';
 
@@ -11,17 +13,32 @@ part 'items_state.dart';
 
 class ItemsBloc extends Bloc<ItemsEvent, ItemsState> {
   final CategoryItemMapOps categoryItemMapOps = CategoryItemMapOps();
+  final OrderModelOps orderModelOps = OrderModelOps();
 
   ItemsBloc() : super(ItemsInitial()) {
     on<ItemsEvent>((event, emit) async {
       if (event is LoadCategoryItems) {
         await onLoadCategoryItems(event, emit);
       }
+      if (event is AddToCart) {
+        await onAddToCart(event, emit);
+      }
     });
   }
 
+  Future<void> onAddToCart(
+    AddToCart event,
+    Emitter emit,
+  ) async {
+    final CommonResponse response =
+        await orderModelOps.updateQuantity(orderModel: event.order);
+    if (response.data != null) {}
+  }
+
   Future<void> onLoadCategoryItems(
-      LoadCategoryItems event, Emitter emit) async {
+    LoadCategoryItems event,
+    Emitter emit,
+  ) async {
     emit.call(LoadCategoryItemsInProgress());
 
     final CommonResponse response =

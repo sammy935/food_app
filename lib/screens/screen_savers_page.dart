@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:samip_grubrr/blocs/screen_saver/screen_saver_cubit.dart';
-import 'package:samip_grubrr/screens/login_page.dart';
 import 'package:samip_grubrr/utils/base_api_const.dart';
 import 'package:samip_grubrr/utils/base_colors.dart';
 import 'package:samip_grubrr/utils/base_extension.dart';
 import 'package:samip_grubrr/utils/base_methods.dart';
 import 'package:samip_grubrr/utils/base_strings.dart';
 import 'package:samip_grubrr/utils/routes.dart';
+
+import '../widgets/platform_indicator.dart';
 
 class ScreenSaversPage extends StatefulWidget {
   const ScreenSaversPage({Key? key}) : super(key: key);

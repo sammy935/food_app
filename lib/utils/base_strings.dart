@@ -18,5 +18,5 @@ class BaseStrings {
   static const String password = 'Password';
   static const String checkout = 'Checkout';
   static const String cancelOrder = 'Cancel Order';
-  static const String orderScreenWaring = 'Order screen in development';
+  static const String cartIsEmpty = 'Cart is empty';
 }

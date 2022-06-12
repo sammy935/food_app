@@ -11,6 +11,7 @@ import 'package:samip_grubrr/widgets/custom_textfield.dart';
 
 import '../../utils/base_methods.dart';
 import '../../utils/routes.dart';
+import '../widgets/platform_indicator.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -138,38 +139,6 @@ class _LoginPageState extends State<LoginPage> {
       color: BaseColors.pink,
       fontWeight: FontWeight.w400,
       fontSize: 14.sp,
-    );
-  }
-}
-
-class PlatformIndicator extends StatelessWidget {
-  const PlatformIndicator({
-    Key? key,
-    this.message,
-    this.showMessage = true,
-  })  : assert(showMessage ? message != null : true,
-            'message null when showMessage true'),
-        super(key: key);
-
-  final String? message;
-  final bool showMessage;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const CircularProgressIndicator(
-            color: BaseColors.pink,
-          ),
-          if (showMessage) ...[
-            20.0.toVSB,
-            Text(message!),
-          ]
-        ],
-      ),
     );
   }
 }
