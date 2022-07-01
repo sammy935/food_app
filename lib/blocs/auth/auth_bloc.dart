@@ -13,9 +13,9 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  late final ApiRepo apiRepo;
+  final ApiRepo apiRepo = ApiRepo();
   final PreferenceManager preferenceManager = PreferenceManager();
-  AuthBloc({required this.apiRepo}) : super(AuthInitial()) {
+  AuthBloc() : super(AuthInitial()) {
     on<AuthEvent>((event, emit) async {
       if (event is LoginEvent) {
         ScreeSaverOps screeSaverOps = ScreeSaverOps();

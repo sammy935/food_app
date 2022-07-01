@@ -31,7 +31,6 @@ class ApiBaseHelper extends GetConnect {
     if (!(await _checkInternet ?? false)) {
       return null;
     }
-    var responseJson;
     // try {
     'REQ=>$requestBody\n\nURL=>${_baseUrl + url}'.toLog;
 
@@ -42,7 +41,8 @@ class ApiBaseHelper extends GetConnect {
     );
     final decodedJSON = serverResponse.body;
     'response=>${serverResponse.statusCode} ${serverResponse.body}'.toLog;
-    responseJson = _transformResponse(serverResponse.statusCode, decodedJSON);
+    var responseJson =
+        _transformResponse(serverResponse.statusCode, decodedJSON);
     // } on SocketException {
     //   BaseStrings.internetNotAvailable.alertSnackBar;}
     // } catch (e) {
@@ -61,22 +61,19 @@ class ApiBaseHelper extends GetConnect {
       return null;
     }
 
-    late final responseJson;
     try {
       var serverResponse = await get(_baseUrl + endPoint, headers: headers);
       final decodedJSON = serverResponse.body;
       'URL=>${_baseUrl + endPoint}\n\nresponse=>${serverResponse.statusCode} ${serverResponse.body}'
           .toLog;
 
-      responseJson = _transformResponse(serverResponse.statusCode, decodedJSON);
-      return decodedJSON;
+      return _transformResponse(serverResponse.statusCode, decodedJSON);
     } on SocketException {
       BaseStrings.internetNotAvailable.alertSnackBar;
     }
     //} catch (e) {
     //       rethrow;
     //     }
-    return responseJson;
   }
 
   dynamic _transformResponse(statusCode, responseJson) {

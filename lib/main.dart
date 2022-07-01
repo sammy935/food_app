@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:samip_grubrr/blocs/auth/auth_bloc.dart';
 import 'package:samip_grubrr/blocs/category_bloc/category_bloc.dart';
 import 'package:samip_grubrr/blocs/item/items_bloc.dart';
-import 'package:samip_grubrr/blocs/order/order_bloc_cubit.dart';
 import 'package:samip_grubrr/blocs/screen_saver/screen_saver_cubit.dart';
 import 'package:samip_grubrr/database/dbRepo.dart';
 import 'package:samip_grubrr/network/apiRepo.dart';
@@ -29,19 +28,18 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key, required this.isLogin}) : super(key: key);
+  const MyApp({Key? key, required this.isLogin}) : super(key: key);
 
-  final ApiRepo apiRepo = ApiRepo();
   final bool isLogin;
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => AuthBloc(apiRepo: apiRepo)),
-        BlocProvider(create: (context) => CategoryBloc()),
-        BlocProvider(create: (context) => OrderBlocCubit()),
-        BlocProvider(create: (context) => ItemsBloc()),
-        BlocProvider(create: (context) => ScreenSaverCubit()),
+        BlocProvider(create: (context) => AuthBloc()),
+        // BlocProvider(create: (context) => CategoryBloc()),
+        // BlocProvider(create: (context) => OrderBlocCubit()),
+        // BlocProvider(create: (context) => ItemsBloc()),
+        // BlocProvider(create: (context) => ScreenSaverCubit()),
       ],
       child: ScreenUtilInit(
         builder: (c) => GestureDetector(

@@ -49,12 +49,10 @@ class AppDatabaseInfo {
     List<String> dbSchemaQueryList = _generateCreationQueryList();
 
     for (var i = 0; i < dbSchemaQueryList.length; i++) {
-      '${dbSchemaQueryList[i]} to be created'.toLog;
+      // '${dbSchemaQueryList[i]} to be created'.toLog;
       theDb.execute(dbSchemaQueryList[i]);
     }
     'new tables created'.toLog;
-
-    'data initialized'.toLog;
 
     return true;
   }

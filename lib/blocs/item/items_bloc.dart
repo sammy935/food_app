@@ -4,9 +4,7 @@ import 'package:samip_grubrr/database/tableOps/category_item_mapping_ops.dart';
 import 'package:samip_grubrr/database/tableOps/order_model_ops.dart';
 import 'package:samip_grubrr/model/common_response.dart';
 import 'package:samip_grubrr/model/food_item_model.dart';
-import 'package:samip_grubrr/model/order_model.dart';
 import 'package:samip_grubrr/utils/base_api_const.dart';
-import 'package:samip_grubrr/utils/base_extension.dart';
 
 part 'items_event.dart';
 part 'items_state.dart';
@@ -20,19 +18,7 @@ class ItemsBloc extends Bloc<ItemsEvent, ItemsState> {
       if (event is LoadCategoryItems) {
         await onLoadCategoryItems(event, emit);
       }
-      if (event is AddToCart) {
-        await onAddToCart(event, emit);
-      }
     });
-  }
-
-  Future<void> onAddToCart(
-    AddToCart event,
-    Emitter emit,
-  ) async {
-    final CommonResponse response =
-        await orderModelOps.updateQuantity(orderModel: event.order);
-    if (response.data != null) {}
   }
 
   Future<void> onLoadCategoryItems(
@@ -49,7 +35,7 @@ class ItemsBloc extends Bloc<ItemsEvent, ItemsState> {
       final itemList = (response.data![BaseApiConstants.val] as List)
           .map((e) => FoodItem.fromJson(e))
           .toList();
-      '$itemList is item list'.toLog;
+      // '$itemList is item list'.toLog;
       emit.call(LoadCategoryItemsCompleted(itemList));
     } else {
       emit.call(LoadCategoryItemsFailed(response.message));

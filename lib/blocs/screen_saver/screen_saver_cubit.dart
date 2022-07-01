@@ -12,7 +12,7 @@ part 'screen_saver_state.dart';
 
 class ScreenSaverCubit extends Cubit<ScreenSaverState> {
   ScreeSaverOps screeSaverOps = ScreeSaverOps();
-  late Timer? timer;
+  Timer? timer;
 
   ScreenSaverCubit() : super(ScreenSaverInitial()) {
     getData();

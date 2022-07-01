@@ -26,8 +26,7 @@ class _OrderScreenState extends State<OrderScreen> {
 
   @override
   void dispose() {
-    //todo close it
-    // orderBlocCubit.close();
+    orderBlocCubit.close();
     super.dispose();
   }
 
@@ -50,21 +49,23 @@ class _OrderScreenState extends State<OrderScreen> {
           } else if (state is GetDataFailed) {
             return BaseStrings.cartIsEmpty.noDataError;
           } else if (state is GetDataCompleted) {
-            return DataTable(
-              dataRowHeight: 150,
-              columnSpacing: 10,
-              headingRowHeight: 50,
-              columns: [
-                buildDataColumn('Item'),
-                buildDataColumn('Qty'),
-                buildDataColumn('Price'),
-              ],
-              rows: List.generate(state.data.length, (index) {
-                final item = state.data[index];
+            return state.data.isEmpty
+                ? 'Cart is empty'.noDataError
+                : DataTable(
+                    dataRowHeight: 150,
+                    columnSpacing: 10,
+                    headingRowHeight: 50,
+                    columns: [
+                      buildDataColumn('Item'),
+                      buildDataColumn('Qty'),
+                      buildDataColumn('Price'),
+                    ],
+                    rows: List.generate(state.data.length, (index) {
+                      final item = state.data[index];
 
-                return buildDataRow(item);
-              }),
-            );
+                      return buildDataRow(item);
+                    }),
+                  );
           } else {
             '$state is state'.toErrorLog;
             return const SizedBox.shrink();
@@ -82,7 +83,7 @@ class _OrderScreenState extends State<OrderScreen> {
             children: [
               Image(
                 image: NetworkImage(item.itemImageUrl),
-                width: 100,
+                width: 80,
               ),
               10.0.toHSB,
               Expanded(
@@ -95,28 +96,48 @@ class _OrderScreenState extends State<OrderScreen> {
             ],
           ),
         ),
-        DataCell(Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.remove),
-              onPressed: () {
-                // todo add
-              },
-              color: BaseColors.orange,
-            ),
-            Text('${item.quantity}'),
-            IconButton(
-              icon: const Icon(Icons.add),
-              color: BaseColors.orange,
-              onPressed: () {
-                // todo remove
-              },
-            ),
-          ],
-        )),
         DataCell(
-          Text('\$${item.itemPrice}'),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              IconButton(
+                icon: const Icon(Icons.remove),
+                onPressed: () {
+                  context.read<OrderBlocCubit>().addToCart(
+                        item.copyWith(isDecrease: true),
+                        isRefresh: true,
+                      );
+                },
+                color: BaseColors.orange,
+              ),
+              Text('${item.quantity}'),
+              IconButton(
+                icon: const Icon(Icons.add),
+                color: BaseColors.orange,
+                onPressed: () {
+                  context.read<OrderBlocCubit>().addToCart(
+                        item,
+                        isRefresh: true,
+                      );
+                },
+              ),
+            ],
+          ),
+        ),
+        DataCell(
+          Row(
+            children: [
+              Text('\$${item.itemPrice}'),
+              IconButton(
+                icon: const Icon(Icons.delete_forever_outlined),
+                color: BaseColors.orange,
+                onPressed: () {
+                  //todo add delete func
+                  context.read<OrderBlocCubit>().deleteOrderItem(item);
+                },
+              ),
+            ],
+          ),
         ),
       ],
     );

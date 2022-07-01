@@ -26,3 +26,10 @@ class GetDataCompleted extends OrderBlocState {
   @override
   List<Object?> get props => [data];
 }
+
+class AddToCartFailed extends OrderBlocState {
+  final String message;
+  AddToCartFailed(this.message);
+  @override
+  List<Object?> get props => [message];
+}

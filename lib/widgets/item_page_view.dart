@@ -9,6 +9,8 @@ import 'package:samip_grubrr/utils/base_strings.dart';
 import 'package:samip_grubrr/utils/base_styles.dart';
 import 'package:samip_grubrr/widgets/platform_indicator.dart';
 
+import '../blocs/order/order_bloc_cubit.dart';
+
 class FoodItemPageView extends StatelessWidget {
   const FoodItemPageView(
       {Key? key, required this.index, required this.itemBloc})
@@ -22,7 +24,7 @@ class FoodItemPageView extends StatelessWidget {
     return BlocBuilder<ItemsBloc, ItemsState>(
         bloc: itemBloc,
         builder: (context, state) {
-          '$state is ths item bloc '.toLog;
+          // '$state is ths item bloc '.toLog;
 
           if (state is LoadCategoryItemsInProgress) {
             return const PlatformIndicator(
@@ -45,7 +47,7 @@ class FoodItemPageView extends StatelessWidget {
                     padding: const EdgeInsets.all(14.0),
                     itemBuilder: (context, index) {
                       final item = list[index];
-                      return buildFoodItem(item);
+                      return buildFoodItem(item, context);
                     },
                   )
                 : BaseStrings.noItemsFoundForCategory.noDataError;
@@ -58,27 +60,24 @@ class FoodItemPageView extends StatelessWidget {
         });
   }
 
-  Widget buildFoodItem(FoodItem foodItem) {
-    '${foodItem.name}${foodItem.price}${foodItem.imageLink}'.toLog;
+  Widget buildFoodItem(FoodItem foodItem, BuildContext context) {
+    // '${foodItem.name}${foodItem.price}${foodItem.imageLink}'.toLog;
 
     return InkWell(
       onTap: () {
         //todo check regarding category name and id
-        itemBloc.add(
-          AddToCart(
-            OrderModel(
-              itemId: foodItem.id,
-              itemImageUrl: foodItem.imageLink,
-              itemName: foodItem.name,
-              itemPrice: foodItem.price,
-              quantity: 1,
-              orderTotal: 0.0,
-              categoryId: 1,
-              categoryName: '',
-              // isDecrement: true,
-            ),
-          ),
+        final order = OrderModel(
+          itemId: foodItem.id,
+          itemImageUrl: foodItem.imageLink,
+          itemName: foodItem.name,
+          itemPrice: foodItem.price,
+          quantity: 1,
+          orderTotal: 0.0,
+          categoryId: 1,
+          categoryName: '',
+          // isDecrement: true,
         );
+        context.read<OrderBlocCubit>().addToCart(order);
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,

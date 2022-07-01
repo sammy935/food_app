@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceManager {
-  late final SharedPreferences _storage;
+  late SharedPreferences _storage;
 
   PreferenceManager();
 

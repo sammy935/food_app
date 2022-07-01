@@ -11,11 +11,3 @@ class LoadCategoryItems extends ItemsEvent {
   @override
   List<Object?> get props => [categoryId];
 }
-
-class AddToCart extends ItemsEvent {
-  const AddToCart(this.order);
-  final OrderModel order;
-
-  @override
-  List<Object?> get props => [order];
-}
