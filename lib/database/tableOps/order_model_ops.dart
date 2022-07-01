@@ -1,6 +1,4 @@
-import 'dart:developer';
-
-import 'package:samip_grubrr/database/dbRepo.dart';
+import 'package:samip_grubrr/database/db_repo.dart';
 import 'package:samip_grubrr/model/common_response.dart';
 import 'package:samip_grubrr/model/order_model.dart';
 import 'package:samip_grubrr/utils/base_api_const.dart';
@@ -24,7 +22,7 @@ class OrderModelOps {
       return CommonResponse(
           message: 'Success', data: {BaseApiConstants.val: res});
     } catch (e) {
-      log(e.toString());
+      e.toString().toErrorLog;
       return CommonResponse(message: '$e');
     }
   }
@@ -86,24 +84,51 @@ class OrderModelOps {
           .map((e) => OrderModel.fromJson(e))
           .toList();
 
-      'orderModel is $orderModel \n$res is res \n$currentOrder is res2'.toLog;
+      'order is $orderModel \n$res are all orders \n$currentOrder is currentOrder from database'
+          .toLog;
 
       return CommonResponse(
           message: 'Success', data: {BaseApiConstants.val: res});
     } catch (e) {
-      log(e.toString());
+      e.toString().toErrorLog;
       return CommonResponse(message: '$e');
     }
   }
 
-  Future<void> deleteItem({required OrderModel orderModel}) async {
-    final int delRes = await AppDB.instance.getDatabase().delete(
-      tableName,
-      where: '${OrderModel.itemIdString} = ?',
-      whereArgs: [orderModel.itemId],
-    );
-    if (delRes == 0) {
-      throw 'not deleted';
+  Future<CommonResponse> deleteItem({required OrderModel orderModel}) async {
+    try {
+      List currentOrder = await AppDB.instance.getDatabase().query(
+        tableName,
+        where: '${OrderModel.itemIdString} = ?',
+        whereArgs: [orderModel.itemId],
+      );
+      bool isOrderAbsent = currentOrder.isEmpty;
+      if (isOrderAbsent) {
+        throw 'order not present';
+      } else {
+        final int delRes = await AppDB.instance.getDatabase().delete(
+          tableName,
+          where: '${OrderModel.itemIdString} = ?',
+          whereArgs: [orderModel.itemId],
+        );
+        if (delRes == 0) {
+          throw 'not deleted';
+        }
+
+        List res = (await AppDB.instance
+                .getDatabase()
+                .rawQuery('''SELECT * FROM $tableName'''))
+            .map((e) => OrderModel.fromJson(e))
+            .toList();
+
+        'orderModel is $orderModel \n$res is res'.toLog;
+
+        return CommonResponse(
+            message: 'Success', data: {BaseApiConstants.val: res});
+      }
+    } catch (e) {
+      e.toString().toErrorLog;
+      return CommonResponse(message: '$e');
     }
   }
 }

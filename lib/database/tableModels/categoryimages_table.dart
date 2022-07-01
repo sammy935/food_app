@@ -1,4 +1,4 @@
-import 'package:samip_grubrr/database/tableModels/categoryMastersTable.dart';
+import 'package:samip_grubrr/database/tableModels/categorymasters_table.dart';
 
 class CategoryImagesTable {
   static const String tableName = "CategoryImages";

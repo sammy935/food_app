@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../database/tableModels/categoryMastersTable.dart';
-import '../database/tableModels/foodItemTable.dart';
+import '../database/tableModels/categorymasters_table.dart';
+import '../database/tableModels/fooditem_table.dart';
 import '../database/tableModels/food_item_images_table.dart';
 
 part 'order_model.g.dart';

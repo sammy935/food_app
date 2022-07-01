@@ -1,6 +1,6 @@
-import 'package:samip_grubrr/database/tableModels/categoryImagesTable.dart';
-import 'package:samip_grubrr/database/tableModels/categoryMastersTable.dart';
-import 'package:samip_grubrr/database/tableModels/foodItemTable.dart';
+import 'package:samip_grubrr/database/tableModels/categoryimages_table.dart';
+import 'package:samip_grubrr/database/tableModels/categorymasters_table.dart';
+import 'package:samip_grubrr/database/tableModels/fooditem_table.dart';
 import 'package:samip_grubrr/database/tableModels/food_item_images_table.dart';
 
 class CategoryItemMappingTable {

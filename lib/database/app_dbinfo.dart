@@ -1,9 +1,9 @@
-import 'package:samip_grubrr/database/tableModels/categoryImagesTable.dart';
-import 'package:samip_grubrr/database/tableModels/categoryMastersTable.dart';
+import 'package:samip_grubrr/database/tableModels/categoryimages_table.dart';
+import 'package:samip_grubrr/database/tableModels/categorymasters_table.dart';
 import 'package:samip_grubrr/database/tableModels/category_item_mappings_table.dart';
-import 'package:samip_grubrr/database/tableModels/foodItemTable.dart';
+import 'package:samip_grubrr/database/tableModels/fooditem_table.dart';
 import 'package:samip_grubrr/database/tableModels/food_item_images_table.dart';
-import 'package:samip_grubrr/database/tableModels/screenSaversTable.dart';
+import 'package:samip_grubrr/database/tableModels/screensavers_table.dart';
 import 'package:samip_grubrr/model/order_model.dart';
 import 'package:samip_grubrr/utils/base_extension.dart';
 import 'package:sqflite/sqflite.dart';

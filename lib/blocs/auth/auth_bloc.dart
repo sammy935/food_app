@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:samip_grubrr/database/tableOps/categoryOps.dart';
+import 'package:samip_grubrr/database/tableOps/category_ops.dart';
 import 'package:samip_grubrr/database/tableOps/category_item_mapping_ops.dart';
-import 'package:samip_grubrr/database/tableOps/screenSaverOps.dart';
+import 'package:samip_grubrr/database/tableOps/screensaver_ops.dart';
 import 'package:samip_grubrr/model/common_response.dart';
-import 'package:samip_grubrr/model/screenSaver_api_model.dart';
-import 'package:samip_grubrr/network/apiRepo.dart';
+import 'package:samip_grubrr/model/screensaver_api_model.dart';
+import 'package:samip_grubrr/network/api_repo.dart';
 import 'package:samip_grubrr/utils/base_extension.dart';
 import 'package:samip_grubrr/utils/preference_manager.dart';
 

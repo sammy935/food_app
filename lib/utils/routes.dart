@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:samip_grubrr/blocs/auth/auth_bloc.dart';
 import 'package:samip_grubrr/blocs/order/order_bloc_cubit.dart';
 import 'package:samip_grubrr/screens/home_screen.dart';
 import 'package:samip_grubrr/screens/login_page.dart';

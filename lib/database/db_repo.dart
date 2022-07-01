@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:samip_grubrr/database/appDBInfo.dart';
+import 'package:samip_grubrr/database/app_dbinfo.dart';
 import 'package:samip_grubrr/utils/base_extension.dart';
 import 'package:sqflite/sqflite.dart';
 

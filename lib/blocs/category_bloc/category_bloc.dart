@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:samip_grubrr/database/tableOps/categoryOps.dart';
+import 'package:samip_grubrr/database/tableOps/category_ops.dart';
 import 'package:samip_grubrr/model/category_model.dart';
 import 'package:samip_grubrr/model/common_response.dart';
 import 'package:samip_grubrr/model/food_item_model.dart';

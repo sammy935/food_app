@@ -1,4 +1,4 @@
-import 'package:samip_grubrr/database/tableModels/foodItemTable.dart';
+import 'package:samip_grubrr/database/tableModels/fooditem_table.dart';
 
 class FoodItemImagesTable {
   static const String tableName = "FoodItemImagesTable";
