@@ -43,14 +43,12 @@ class _OrderScreenState extends State<OrderScreen> {
       body: BlocBuilder<OrderBlocCubit, OrderBlocState>(
         builder: (context, state) {
           if (state is GetDataInProgress) {
-            return const PlatformIndicator(
-              showMessage: false,
-            );
-          } else if (state is GetDataFailed) {
-            return BaseStrings.cartIsEmpty.noDataError;
+            return const PlatformIndicator(showMessage: false);
+          } else if (state is FailedState) {
+            return state.failMessage.noDataError;
           } else if (state is GetDataCompleted) {
             return state.data.isEmpty
-                ? 'Cart is empty'.noDataError
+                ? BaseStrings.cartIsEmpty.noDataError
                 : DataTable(
                     dataRowHeight: 150,
                     columnSpacing: 10,
@@ -109,6 +107,7 @@ class _OrderScreenState extends State<OrderScreen> {
                       );
                 },
                 color: BaseColors.orange,
+                visualDensity: VisualDensity.compact,
               ),
               Text('${item.quantity}'),
               IconButton(
@@ -120,6 +119,7 @@ class _OrderScreenState extends State<OrderScreen> {
                         isRefresh: true,
                       );
                 },
+                visualDensity: VisualDensity.compact,
               ),
             ],
           ),
@@ -127,15 +127,17 @@ class _OrderScreenState extends State<OrderScreen> {
         DataCell(
           Row(
             children: [
+              const Spacer(),
               Text('\$${item.itemPrice}'),
+              const Spacer(),
               IconButton(
                 icon: const Icon(Icons.delete_forever_outlined),
                 color: BaseColors.orange,
-                onPressed: () {
-                  //todo add delete func
-                  context.read<OrderBlocCubit>().deleteOrderItem(item);
-                },
+                visualDensity: VisualDensity.compact,
+                onPressed: () =>
+                    context.read<OrderBlocCubit>().deleteOrderItem(item),
               ),
+              const Spacer(),
             ],
           ),
         ),

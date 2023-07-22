@@ -15,9 +15,11 @@ class OrderModelOps {
 
   Future<CommonResponse> getAllOrderItems() async {
     try {
-      var res = await AppDB.instance
-          .getDatabase()
-          .rawQuery('''SELECT * FROM $tableName''');
+      var res = (await AppDB.instance
+              .getDatabase()
+              .rawQuery('''SELECT * FROM $tableName'''))
+          .map((e) => OrderModel.fromJson(e))
+          .toList();
 
       return CommonResponse(
           message: 'Success', data: {BaseApiConstants.val: res});
@@ -104,15 +106,16 @@ class OrderModelOps {
       );
       bool isOrderAbsent = currentOrder.isEmpty;
       if (isOrderAbsent) {
-        throw 'order not present';
+        throw 'Order not present';
       } else {
         final int delRes = await AppDB.instance.getDatabase().delete(
           tableName,
           where: '${OrderModel.itemIdString} = ?',
           whereArgs: [orderModel.itemId],
         );
+
         if (delRes == 0) {
-          throw 'not deleted';
+          throw 'Not deleted';
         }
 
         List res = (await AppDB.instance
@@ -126,8 +129,8 @@ class OrderModelOps {
         return CommonResponse(
             message: 'Success', data: {BaseApiConstants.val: res});
       }
-    } catch (e) {
-      e.toString().toErrorLog;
+    } catch (e, stackTree) {
+      '${e.toString()}\n$stackTree '.toErrorLog;
       return CommonResponse(message: '$e');
     }
   }

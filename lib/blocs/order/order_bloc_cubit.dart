@@ -15,19 +15,12 @@ class OrderBlocCubit extends Cubit<OrderBlocState> {
 
   Future<void> getData() async {
     emit(GetDataInProgress());
-    try {
-      final CommonResponse getAllData = await orderModelOps.getAllOrderItems();
-      if (getAllData.data != null) {
-        List<OrderModel> list = List<OrderModel>.from(getAllData
-            .data![BaseApiConstants.val]
-            .map((x) => OrderModel.fromJson(x)));
-        emit(GetDataCompleted(list));
-      } else {
-        emit(GetDataFailed(getAllData.message));
-      }
-    } catch (e, stacktrace) {
-      ('Exception: $e\nStacktrace: $stacktrace').toErrorLog;
-      emit(GetDataFailed(e.toString()));
+
+    final CommonResponse getAllData = await orderModelOps.getAllOrderItems();
+    if (getAllData.data != null) {
+      emit(GetDataCompleted(getAllData.data![BaseApiConstants.val]));
+    } else {
+      emit(GetDataFailed(getAllData.message));
     }
   }
 
@@ -35,14 +28,19 @@ class OrderBlocCubit extends Cubit<OrderBlocState> {
     final CommonResponse response =
         await orderModelOps.updateQuantity(orderModel: order);
     if (response.data != null && isRefresh) {
-      List<OrderModel> list = List<OrderModel>.from(response
-          .data![BaseApiConstants.val]
-          .map((x) => OrderModel.fromJson(x)));
-      emit(GetDataCompleted(list));
+      emit(GetDataCompleted(response.data![BaseApiConstants.val]));
     } else {
       emit(AddToCartFailed(response.message));
     }
   }
 
-  Future<void> deleteOrderItem(OrderModel order) async {}
+  Future<void> deleteOrderItem(OrderModel order) async {
+    final CommonResponse getAllData =
+        await orderModelOps.deleteItem(orderModel: order);
+    if (getAllData.data != null) {
+      emit(GetDataCompleted(getAllData.data![BaseApiConstants.val]));
+    } else {
+      emit(GetDataFailed(getAllData.message));
+    }
+  }
 }

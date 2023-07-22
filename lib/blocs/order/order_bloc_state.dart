@@ -2,6 +2,11 @@ part of 'order_bloc_cubit.dart';
 
 abstract class OrderBlocState extends Equatable {}
 
+abstract class FailedState extends OrderBlocState {
+  final String failMessage;
+  FailedState(this.failMessage);
+}
+
 class OrderBlocInitial extends OrderBlocState {
   @override
   List<Object?> get props => [];
@@ -12,11 +17,10 @@ class GetDataInProgress extends OrderBlocState {
   List<Object?> get props => [];
 }
 
-class GetDataFailed extends OrderBlocState {
-  final String message;
-  GetDataFailed(this.message);
+class GetDataFailed extends FailedState {
+  GetDataFailed(String message) : super(message);
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [failMessage];
 }
 
 class GetDataCompleted extends OrderBlocState {
@@ -27,9 +31,14 @@ class GetDataCompleted extends OrderBlocState {
   List<Object?> get props => [data];
 }
 
-class AddToCartFailed extends OrderBlocState {
-  final String message;
-  AddToCartFailed(this.message);
+class AddToCartFailed extends FailedState {
+  AddToCartFailed(String message) : super(message);
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [failMessage];
+}
+
+class DeleteItemCartFailed extends FailedState {
+  DeleteItemCartFailed(String message) : super(message);
+  @override
+  List<Object?> get props => [failMessage];
 }
